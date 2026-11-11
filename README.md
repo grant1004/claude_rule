@@ -26,6 +26,14 @@ Claude Code 的規則庫：在同一個專案同時處理多個問題的做法�
 4. 使用者沒有指定模式時用模式一，你就是協調者，從「分診與分組」開始。
 5. 使用者沒有給建置或全套測試的指令時，先從專案的 CLAUDE.md 或 README 找；找不到再問。
 
+## 收尾
+
+全部問題都處理完之後才做，而且每一步都要使用者確認：
+
+1. 併回正式分支：切到原本的分支，執行 `git merge --no-ff integration`。這是整個流程裡唯一會動到正式分支的地方。
+2. 清理：先 `git worktree remove <worktree 路徑>`，再 `git branch -d <車道分支>`，最後 `git branch -d integration`。分支還被 worktree 使用時刪不掉，所以順序不能反。
+3. 用 `git worktree list` 確認沒有殘留的 worktree。
+
 ## 檔案
 
 | 檔案 | 用途 | 自動安裝 |
