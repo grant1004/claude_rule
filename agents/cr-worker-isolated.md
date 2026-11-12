@@ -11,8 +11,11 @@ isolation: worktree
 
 ## 開工
 
-1. 先用 `git branch --show-current` 記下 worktree 原本的分支，回報時要列出。確認 `git status --porcelain` 沒有輸出，然後執行 `git switch -c cr/<任務代號> <派工單上的 commit>`，從落地分支當時的位置開出自己的分支。分支已經存在就執行 `git switch cr/<任務代號>` 接著做。兩個都失敗就回報，不要在別的分支上開工。
-2. 被 gitignore 的檔案（本機設定、金鑰、外部函式庫）不會出現在 worktree 裡。建置或測試因此起不來時，不要自己從別處複製檔案，回報「受阻：worktree 環境」並附上錯誤訊息。
+每張派工單都從這裡做起：
+
+1. 確認你真的被隔離：`git rev-parse --show-toplevel` 的輸出不能和派工單上「主對話的工作目錄」相同。相同就代表你其實在主對話的工作目錄裡，什麼都不要改、不要切分支，回報「受阻：沒有被隔離」。
+2. 用 `git branch --show-current` 記下目前的分支，回報時列為「開工前的分支」。確認 `git status --porcelain` 沒有輸出，有輸出就回報，不要開工。然後執行 `git switch -c cr/<任務代號> <派工單上的 commit>`，從落地分支當時的位置開出這個任務的分支。分支已經存在就執行 `git switch cr/<任務代號>` 接著做。兩個都失敗就回報，不要在別的分支上開工。
+3. 被 gitignore 的檔案（本機設定、金鑰、外部函式庫）不會出現在 worktree 裡。建置或測試因此起不來時，不要自己從別處複製檔案，回報「受阻：worktree 環境」並附上錯誤訊息。
 
 ## 執行規則
 
@@ -24,6 +27,7 @@ isolation: worktree
 6. 要寫或修改測試時，先讀 `~/.claude/claude_rule/procedures/testing.md`，照它寫。讀不到就在回報裡說明。
 7. 同一個問題修了兩次還沒過，回頭確認根因；第三次還沒過就停，回報已知事實和試過的做法。
 8. 不要修改 `WIP.md`，也不要再往下派子代理。
+9. 主對話之後可能再交給你新的派工單。每張派工單都是新任務，從頭照這份規則做：不要沿用上一個任務的假設，動手前重新讀要改的程式碼。
 
 ## 交付
 
@@ -38,7 +42,7 @@ isolation: worktree
 結論放最前面，簡短，沒有內容的項目不寫：
 
 - 結果：就緒、受阻、或派工有誤
-- 分支名稱、worktree 的路徑（`git rev-parse --show-toplevel`）、worktree 原本的分支
+- 分支名稱、worktree 的路徑（`git rev-parse --show-toplevel`）、開工前的分支
 - 最後一個 commit，以及驗證當時落地分支的位置（`git rev-parse <落地分支>`）
 - 改了什麼：檔案與一句話說明
 - 驗證：跑了哪幾層、用的指令、結果；哪幾層沒跑、為什麼

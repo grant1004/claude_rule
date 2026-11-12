@@ -34,6 +34,7 @@
 
 ## 改 claude_rule 本身
 
-- `rules/`、`agents/`、`procedures/`、`templates/` 底下任何檔案的內容有變就升版：同時更新 `rules/core.md`「規則版本」那一行和 `VERSION` 檔，兩處要一致。回報裡的規則版本代表的是整套規則，不只是核心。
+- `rules/`、`agents/`、`hooks/`、`procedures/`、`templates/` 底下任何檔案的內容有變就升版：同時更新 `rules/core.md`「規則版本」那一行和 `VERSION` 檔，兩處要一致。回報裡的規則版本代表的是整套規則，不只是核心。
+- 改了 `hooks/cr-guard.sh` 要跑 `python3 hooks/test_cr_guard.py`，每一行都是 ok 才 commit。它擋錯對象會讓執行者改不了檔，放錯對象會讓強制失效。
 - commit 訊息寫清楚改了什麼、因為哪件事。
 - 改完之後，每台電腦要照 README 的「套用」重跑一次，並新開 session，新版才會生效。

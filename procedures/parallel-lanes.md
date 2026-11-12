@@ -28,7 +28,7 @@
 
 我指定要用獨立 session 時才用，例如某條車道需要我在場操作。
 
-1. 主對話用 `git worktree add ..\<專案>-<任務代號> -b cr/<任務代號>` 幫每條車道建 worktree，並替每條車道寫好一段開場訊息給我。第一行是「你是平行車道的執行者，不是調度者。先讀 `~/.claude/claude_rule/agents/cr-worker-isolated.md`，照裡面的執行規則、交付和回報格式做；你已經在自己的 worktree 和分支上，不必再開分支。」，後面接整張車道卡。由我在各個 worktree 開 session 貼上。
+1. 主對話用 `git worktree add ..\<專案>-<任務代號> -b cr/<任務代號>` 幫每條車道建 worktree，並替每條車道寫好一段開場訊息給我。第一行是「你是平行車道的執行者，不是調度者。先讀 `~/.claude/claude_rule/agents/cr-worker-isolated.md`，照裡面的執行規則、交付和回報格式做；你已經在自己的 worktree 和分支上，不必再開分支。」，後面接整張車道卡。由我在各個 worktree 開 session 貼上。這種 session 要自己改檔，開之前先設環境變數 `CR_GUARD=off`（PowerShell：`$env:CR_GUARD = "off"`），否則守門 hook 會把它的修改擋下來。
 2. session 之間只傳三種訊息：「就緒」「已落地」「需要動到車道外的檔案」。訊息發不出去，就把內容給我，由我轉達。
 3. 車道先 commit 再發訊息。主對話沒收到「就緒」時，用 `git log <落地分支>..cr/<任務代號>` 查看進度，不要只等訊息。
 4. 主對話收到「就緒」後照 `dispatch.md` 驗收，合併前先問我；合併後向其他車道發「已落地」，收到的車道 rebase 並重驗。
